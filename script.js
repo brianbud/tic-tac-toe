@@ -9,6 +9,15 @@ function Gameboard() {
       board[i].push(Cell());
     }
   }
+
+  const printBoard = () => {
+    const boardWithCellValues = board.map((row) =>
+      row.map((cell) => cell.getValue())
+    );
+    console.log(boardWithCellValues);
+  };
+
+  return { printBoard };
 }
 
 function Cell() {
@@ -24,3 +33,6 @@ function Cell() {
 
   return { addMark, getValue };
 }
+
+const board = Gameboard();
+console.log(board.printBoard());
