@@ -10,6 +10,17 @@ function Gameboard() {
     }
   }
 
+  const drawMarker = (column) => {
+    const availableCells = board
+      .filter((row) => row[column].getValue() === 0)
+      .map((row) => row[column]);
+
+    //if all cells are filled, invalid move
+    if (!availableCells.length) {
+      return;
+    }
+  };
+
   const printBoard = () => {
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
@@ -34,5 +45,6 @@ function Cell() {
   return { addMark, getValue };
 }
 
-const board = Gameboard();
-console.log(board.printBoard());
+const game = Gameboard();
+
+console.table(game.printBoard());
