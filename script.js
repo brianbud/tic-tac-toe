@@ -10,7 +10,7 @@ function Gameboard() {
     }
   }
 
-  const drawMarker = (column) => {
+  const drawMarker = (column, player) => {
     const availableCells = board
       .filter((row) => row[column].getValue() === 0)
       .map((row) => row[column]);
@@ -19,6 +19,8 @@ function Gameboard() {
     if (!availableCells.length) {
       return;
     }
+
+    board[column].addMark(player);
   };
 
   const printBoard = () => {
