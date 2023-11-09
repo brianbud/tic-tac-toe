@@ -110,6 +110,17 @@ function ScreenController() {
   const activePlayer = game.getActivePlayer();
 
   playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
+
+  //renderboard
+
+  board.forEach((row) => {
+    row.forEach((cell, index) => {
+      const cellBtn = document.createElement("button");
+      cellBtn.classList.add("cell");
+      cellBtn.textContent = cell.getValue();
+      boardDiv.appendChild(cellBtn);
+    });
+  });
 }
 
 ScreenController();
