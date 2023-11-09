@@ -71,6 +71,14 @@ function GameController(
     board.printBoard();
     console.log(`${getActivePlayer().name}'s turn.`);
   };
+
+  const playRound = (row, column) => {
+    console.log(
+      `${getActivePlayer().name} adding marker into row ${row} column ${column}`
+    );
+    board.drawMarker(row, column, getActivePlayer().marker);
+  };
+
   return {
     getActivePlayer,
   };
