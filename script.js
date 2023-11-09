@@ -10,17 +10,12 @@ function Gameboard() {
     }
   }
 
-  const drawMarker = (column, player) => {
-    const availableCells = board
-      .filter((row) => row[column].getValue() === 0)
-      .map((row) => row[column]);
-
-    //if all cells are filled, invalid move
-    if (!availableCells.length) {
-      return;
+  const drawMarker = (row, column, player) => {
+    if (board[row][column].getValue() === 0) {
+      board[row][column].addMark(player);
+    } else {
+      console.log("invalid move");
     }
-
-    board[column].addMark(player);
   };
 
   const printBoard = () => {
@@ -30,7 +25,7 @@ function Gameboard() {
     console.log(boardWithCellValues);
   };
 
-  return { printBoard };
+  return { printBoard, drawMarker };
 }
 
 function Cell() {
@@ -47,6 +42,34 @@ function Cell() {
   return { addMark, getValue };
 }
 
-const game = Gameboard();
+function GameController(
+  playerOneName = "player 1",
+  playerTwoName = "player 2"
+) {
+  const board = Gameboard();
 
-console.table(game.printBoard());
+  const players = [
+    {
+      name: playerOneName,
+      marker: "X",
+    },
+    {
+      name: playerTwoName,
+      marker: "O",
+    },
+  ];
+
+  let activePlayer = players[0];
+
+  const switchPlayerTurn = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+
+  const getActivePlayer = () => activePlayer;
+
+  return {
+    getActivePlayer,
+  };
+}
+
+const game = GameController();
