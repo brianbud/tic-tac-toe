@@ -108,4 +108,8 @@ function ScreenController() {
   //get new version of board
   const board = game.getBoard();
   const activePlayer = game.getActivePlayer();
+
+  playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
 }
+
+ScreenController();
