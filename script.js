@@ -10,11 +10,14 @@ function Gameboard() {
     }
   }
 
+  const getBoard = () => board;
+
   const drawMarker = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].addMark(player);
     } else {
       console.log("invalid move");
+      return;
     }
   };
 
@@ -25,7 +28,7 @@ function Gameboard() {
     console.log(boardWithCellValues);
   };
 
-  return { printBoard, drawMarker };
+  return { printBoard, drawMarker, getBoard };
 }
 
 function Cell() {
@@ -77,11 +80,32 @@ function GameController(
       `${getActivePlayer().name} adding marker into row ${row} column ${column}`
     );
     board.drawMarker(row, column, getActivePlayer().marker);
+    //add win logic here
+
+    switchPlayerTurn();
+    printNewRound();
   };
+
+  printNewRound(); //initial round
 
   return {
     getActivePlayer,
+    playRound,
+    getBoard: board.getBoard,
   };
 }
 
-const game = GameController();
+function ScreenController() {
+  const game = GameController();
+  const playerTurnDiv = document.querySelector(".turn");
+  const boardDiv = document.querySelector(".board");
+
+  // clear board
+  const updateScreen = () => {
+    boardDiv.textContent = "";
+  };
+
+  //get new version of board
+  const board = game.getBoard();
+  const activePlayer = game.getActivePlayer();
+}
