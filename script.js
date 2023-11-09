@@ -103,28 +103,41 @@ function ScreenController() {
   // clear board
   const updateScreen = () => {
     boardDiv.textContent = "";
+
+    //get new version of board
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
+
+    //renderboard
+
+    for (let i = 0; i < board.length; i++) {
+      // loop through the rows
+      for (let j = 0; j < board[i].length; j++) {
+        // loop through the columns
+        const cellBtn = document.createElement("button");
+        cellBtn.classList.add("cell");
+        cellBtn.textContent = board[i][j].getValue();
+        boardDiv.appendChild(cellBtn);
+        let columnIndex = j;
+        let rowIndex = i;
+        cellBtn.dataset.column = columnIndex;
+        cellBtn.dataset.row = rowIndex;
+      }
+    }
   };
 
-  //get new version of board
-  const board = game.getBoard();
-  const activePlayer = game.getActivePlayer();
+  function handleClick(e) {
+    const selectedColumn = e.target.dataset.column;
+    const selectedRow = e.target.dataset.row;
 
-  playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
-
-  //renderboard
-
-  for (let i = 0; i < board.length; i++) {
-    // loop through the rows
-    for (let j = 0; j < board[i].length; j++) {
-      // loop through the columns
-      const cellBtn = document.createElement("button");
-      cellBtn.classList.add("cell");
-      cellBtn.textContent = board[i][j].getValue();
-      boardDiv.appendChild(cellBtn);
-      let cellIndex = i * board.length + j; // calculate the cell index using the row and column indices
-      cellBtn.dataset.cell = cellIndex;
-    }
+    game.playRound(selectedRow, selectedColumn);
+    updateScreen();
   }
+  boardDiv.addEventListener("click", handleClick);
+
+  updateScreen();
 }
 
 console.log(GameController.board);
