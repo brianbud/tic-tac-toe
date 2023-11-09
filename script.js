@@ -124,6 +124,11 @@ function ScreenController() {
         let rowIndex = i;
         cellBtn.dataset.column = columnIndex;
         cellBtn.dataset.row = rowIndex;
+        if (board[i][j].getValue() !== 0) {
+          cellBtn.disabled = true;
+        } else {
+          cellBtn.disabled = false;
+        }
       }
     }
   };
@@ -132,11 +137,12 @@ function ScreenController() {
     const selectedColumn = e.target.dataset.column;
     const selectedRow = e.target.dataset.row;
 
+    if (!selectedColumn) return;
     game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }
   boardDiv.addEventListener("click", handleClick);
-
+  //first render
   updateScreen();
 }
 
