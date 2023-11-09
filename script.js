@@ -113,14 +113,19 @@ function ScreenController() {
 
   //renderboard
 
-  board.forEach((row) => {
-    row.forEach((cell, index) => {
+  for (let i = 0; i < board.length; i++) {
+    // loop through the rows
+    for (let j = 0; j < board[i].length; j++) {
+      // loop through the columns
       const cellBtn = document.createElement("button");
       cellBtn.classList.add("cell");
-      cellBtn.textContent = cell.getValue();
+      cellBtn.textContent = board[i][j].getValue();
       boardDiv.appendChild(cellBtn);
-    });
-  });
+      let cellIndex = i * board.length + j; // calculate the cell index using the row and column indices
+      cellBtn.dataset.cell = cellIndex;
+    }
+  }
 }
 
+console.log(GameController.board);
 ScreenController();
