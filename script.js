@@ -86,6 +86,24 @@ function GameController(
     printNewRound();
   };
 
+  const winPositions = [
+    [0, 1, 2], //first row
+    [3, 4, 5], //second row
+    [6, 7, 8], //third row
+    [0, 3, 6], // first col
+    [1, 4, 7], // second col
+    [2, 5, 8], // third col
+    [0, 4, 6], // first diagnoal
+    [2, 4, 6], // second diagonal
+  ];
+
+  const findWinner = () => {
+    const boardValues = board
+      .getBoard()
+      .flat()
+      .map((cell) => cell.getValue());
+  };
+
   printNewRound(); //initial round
 
   return {
@@ -132,17 +150,6 @@ function ScreenController() {
       }
     }
   };
-
-  const winPositions = [
-    [0, 1, 2], //first row
-    [3, 4, 5], //second row
-    [6, 7, 8], //third row
-    [0, 3, 6], // first col
-    [1, 4, 7], // second col
-    [2, 5, 8], // third col
-    [0, 4, 6], // first diagnoal
-    [2, 4, 6], // second diagonal
-  ];
 
   function handleClick(e) {
     const selectedColumn = e.target.dataset.column;
