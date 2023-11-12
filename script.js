@@ -102,6 +102,18 @@ function GameController(
       .getBoard()
       .flat()
       .map((cell) => cell.getValue());
+
+    for (let i = 0; i < winPositions.length; i++) {
+      const [a, b, c] = winPositionss[i];
+
+      if (
+        boardValues[a] !== 0 &&
+        boardValues[a] === boardValues[b] &&
+        boardValues[b] === boardValues[c]
+      ) {
+        return boardValues[a];
+      }
+    }
   };
 
   printNewRound(); //initial round
