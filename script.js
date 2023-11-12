@@ -80,7 +80,8 @@ function GameController(
       `${getActivePlayer().name} adding marker into row ${row} column ${column}`
     );
     board.drawMarker(row, column, getActivePlayer().marker);
-    //add win logic here
+
+    findWinner();
 
     switchPlayerTurn();
     printNewRound();
@@ -104,13 +105,14 @@ function GameController(
       .map((cell) => cell.getValue());
 
     for (let i = 0; i < winPositions.length; i++) {
-      const [a, b, c] = winPositionss[i];
+      const [a, b, c] = winPositions[i];
 
       if (
         boardValues[a] !== 0 &&
         boardValues[a] === boardValues[b] &&
         boardValues[b] === boardValues[c]
       ) {
+        console.log(`THE WINNER IS ${boardValues[a]}`);
         return boardValues[a];
       }
     }
@@ -119,6 +121,7 @@ function GameController(
   printNewRound(); //initial round
 
   return {
+    findWinner,
     getActivePlayer,
     playRound,
     getBoard: board.getBoard,
@@ -139,7 +142,10 @@ function ScreenController() {
     const activePlayer = game.getActivePlayer();
 
     playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
-
+    if (game.findWinner()) {
+      let winner = game.findWinner();
+      playerTurnDiv.textContent = `${winner} is the winner!`;
+    }
     //renderboard
 
     for (let i = 0; i < board.length; i++) {
@@ -169,9 +175,11 @@ function ScreenController() {
 
     if (!selectedColumn) return;
     game.playRound(selectedRow, selectedColumn);
+    game.findWinner();
     updateScreen();
   }
   boardDiv.addEventListener("click", handleClick);
+
   //first render
   updateScreen();
 }
