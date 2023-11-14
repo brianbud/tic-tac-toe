@@ -94,7 +94,7 @@ function GameController(
     [0, 3, 6], // first col
     [1, 4, 7], // second col
     [2, 5, 8], // third col
-    [0, 4, 6], // first diagnoal
+    [0, 4, 8], // first diagonal
     [2, 4, 6], // second diagonal
   ];
 
@@ -112,7 +112,6 @@ function GameController(
         boardValues[a] === boardValues[b] &&
         boardValues[b] === boardValues[c]
       ) {
-        console.log(`THE WINNER IS ${boardValues[a]}`);
         return boardValues[a];
       }
     }
@@ -142,8 +141,8 @@ function ScreenController() {
     const activePlayer = game.getActivePlayer();
 
     playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
-    if (game.findWinner()) {
-      let winner = game.findWinner();
+    let winner = game.findWinner();
+    if (winner) {
       playerTurnDiv.textContent = `${winner} is the winner!`;
     }
     //renderboard
